@@ -7,13 +7,14 @@ export const useEditor = () => {
   const [state, setState] = useState<EditorState>({
     image: null,
     blurRegions: [],
+    shapes: [], // Only BlurShape[]
     selectedTool: 'select',
     selectedShapeId: null,
     brushSize: 50,
     blurOpacity: 0.8,
     blurRadius: 10,
-    history: [],
-    historyIndex: -1
+    history: [[]], // Only BlurRegion[][]
+    historyIndex: 0
   })
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -22,7 +23,7 @@ export const useEditor = () => {
   const addToHistory = useCallback((regions: BlurRegion[]) => {
     setState(prev => {
       const newHistory = prev.history.slice(0, prev.historyIndex + 1)
-      newHistory.push([...regions])
+      newHistory.push([...regions]) // Remove 'as any', ensure BlurRegion[]
       return {
         ...prev,
         history: newHistory,
@@ -99,7 +100,7 @@ export const useEditor = () => {
         const newIndex = prev.historyIndex - 1
         return {
           ...prev,
-          blurRegions: [...prev.history[newIndex]],
+          blurRegions: [...prev.history[newIndex]], // Only BlurRegion[]
           historyIndex: newIndex,
           selectedShapeId: null
         }
@@ -114,7 +115,7 @@ export const useEditor = () => {
         const newIndex = prev.historyIndex + 1
         return {
           ...prev,
-          blurRegions: [...prev.history[newIndex]],
+          blurRegions: [...prev.history[newIndex]], // Only BlurRegion[]
           historyIndex: newIndex,
           selectedShapeId: null
         }

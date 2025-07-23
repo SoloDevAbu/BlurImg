@@ -17,7 +17,7 @@ export interface EditorState {
   selectedShapeId: string | null
   blurRadius: number
   blurOpacity: number
-  history: BlurShape[][]
+  history: BlurRegion[][]
   historyIndex: number
   image: HTMLImageElement | null
   blurRegions: BlurRegion[]
