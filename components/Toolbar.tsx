@@ -182,7 +182,9 @@ export default function Toolbar({
         <div className="space-y-2 p-3 bg-blue-50 rounded-lg">
           <h4 className="font-medium text-blue-900 text-sm">Selected Shape</h4>
           <p className="text-blue-700 text-xs">
-            {selectedRegion?.type.charAt(0).toUpperCase() + selectedRegion?.type.slice(1)} blur region
+            {selectedRegion && selectedRegion.type
+              ? `${selectedRegion.type.charAt(0).toUpperCase()}${selectedRegion.type.slice(1)} blur region`
+              : 'Blur region'}
           </p>
           <p className="text-blue-600 text-xs">
             Adjust opacity and intensity above
